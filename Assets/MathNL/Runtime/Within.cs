@@ -16,5 +16,57 @@ namespace Nulock.Math
             float diff = AbsoluteAngleDifference(currentAngle, targetAngle);
             return diff <= rangeAngle / 2;
         }
+
+
+        /// <summary>
+        /// 指定した範囲内に値が存在するかどうかを判定します。
+        /// </summary>
+        public static bool IsWithinRange(this float self, float from, float to)
+        {
+            var (min, max) = (from > to) ? (to, from) : (from, to);
+            return min <= self && self <= max;
+        }
+
+        /// <summary>
+        /// 指定した範囲内にベクトルが存在するかどうかを判定します。
+        /// </summary>
+        /// <param name="center">中心点</param>
+        /// <param name="current">現在のベクトル</param>
+        /// <param name="rangeA">範囲A</param>
+        /// <param name="rangeB">範囲B</param>
+        public static bool IsWithinDirectionRange(Vector2 center, Vector2 current, Vector2 rangeA, Vector2 rangeB)
+        {
+            float rangeAAngle = GetAngle(center, rangeA);
+            float rangeBAngle = GetAngle(center, rangeB);
+
+            float currentAngle = GetAngle(center, current);
+            float targetAngle = AverageAngle(rangeAAngle, rangeBAngle);
+            float range = AbsoluteAngleDifference(rangeAAngle, rangeBAngle);
+
+            return IsWithinCircularRange(currentAngle, targetAngle, range);
+        }
+
+        /// <summary>
+        /// 指定した範囲および半径内にベクトルが存在するかどうかを判定します。(実験中)
+        /// </summary>
+        /// <param name="center">中心点</param>
+        /// <param name="current">現在のベクトル</param>
+        /// <param name="rangeA">範囲A</param>
+        /// <param name="rangeB">範囲B</param>
+        /// <param name="r">半径</param>
+        public static bool IsWithinSharpFunRange(Vector2 center, Vector2 current, Vector2 rangeA, Vector2 rangeB, float r)
+        {
+            if (!IsWithinCircleRange(center, current, r)) return false;
+
+            return IsWithinDirectionRange(center, current, rangeA, rangeB);
+        }
+
+        /// <summary>
+        /// 指定した円内にベクトルが存在するかどうかを判定します。
+        /// </summary>
+        public static bool IsWithinCircleRange(Vector2 center, Vector2 current, float r)
+        {
+            return Vector2.Distance(center, current) <= r;
+        }
     }
 }

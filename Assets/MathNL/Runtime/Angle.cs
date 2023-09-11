@@ -1,120 +1,105 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 namespace Nulock.Math
 {
     public static partial class MathNL
     {
-        /// <summary>.
-        /// Šp“x‚ğ-180‹‚©‚ç180‹‚Ì”ÍˆÍ‚É³‹K‰»‚µ‚Ü‚·B
-        /// </summary>
-        /// <param name="angle">³‹K‰»‚·‚éŠp“xB</param>
-        /// <returns>³‹K‰»‚³‚ê‚½Šp“xB</returns>
-        public static float NormalizeAngle(float angle)
-        {
-            return (angle + 180) % 360 - 180;
-        }
         /// <summary>
-        /// Šp“x‚ğ0‹‚©‚ç360‹‚Ì”ÍˆÍ‚É³‹K‰»‚µ‚Ü‚·B
+        /// è§’åº¦ã‚’0Â°ã‹ã‚‰360Â°ã®ç¯„å›²ã«æ­£è¦åŒ–ã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="angle">³‹K‰»‚·‚éŠp“xB</param>
-        /// <returns>³‹K‰»‚³‚ê‚½Šp“xB</returns>
-        public static float NormalizeAngle360(float angle)
+        /// <param name="angle">æ­£è¦åŒ–ã™ã‚‹è§’åº¦ã€‚</param>
+        /// <returns>æ­£è¦åŒ–ã•ã‚ŒãŸè§’åº¦ã€‚</returns>
+        public static float NormalizeAngle(float angle)
         {
             return (angle % 360f + 360f) % 360f;
         }
-        /// <summary>
-        /// “ñ‚Â‚ÌŠp“xŠÔ‚ÌÅ¬â‘Î·‚ğŒvZ‚µ‚Ü‚·B
+        /// <summary>.
+        /// è§’åº¦ã‚’-180Â°ã‹ã‚‰180Â°ã®ç¯„å›²ã«æ­£è¦åŒ–ã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="angleA">Å‰‚ÌŠp“xB</param>
-        /// <param name="angleB">“ñ”Ô–Ú‚ÌŠp“xB</param>
-        /// <returns>“ñ‚Â‚ÌŠp“xŠÔ‚ÌÅ¬â‘Î·B</returns>
+        /// <param name="angle">æ­£è¦åŒ–ã™ã‚‹è§’åº¦ã€‚</param>
+        /// <returns>æ­£è¦åŒ–ã•ã‚ŒãŸè§’åº¦ã€‚</returns>
+        public static float NormalizeAngle180(float angle)
+        {
+            return (360f + (angle + 180f) % 360f) % 360f - 180f;
+        }
+        /// <summary>
+        /// äºŒã¤ã®è§’åº¦é–“ã®æœ€å°çµ¶å¯¾å·®ã‚’è¨ˆç®—ã—ã¾ã™ã€‚
+        /// </summary>
+        /// <param name="angleA">æœ€åˆã®è§’åº¦ã€‚</param>
+        /// <param name="angleB">äºŒç•ªç›®ã®è§’åº¦ã€‚</param>
+        /// <returns>äºŒã¤ã®è§’åº¦é–“ã®æœ€å°çµ¶å¯¾å·®ã€‚</returns>
         public static float AbsoluteAngleDifference(float angleA, float angleB)
         {
-            float diff = NormalizeAngle(angleB - angleA);
-            return Mathf.Abs(diff);
+            return Mathf.Abs(AngleDifference(angleA, angleB));
         }
         /// <summary>
-        /// “ñ‚Â‚ÌŠp“xŠÔ‚Ì·‚ğŒvZ‚µA-180‹‚©‚ç180‹‚ÌŠÔ‚Ì’l‚Æ‚µ‚Ä•Ô‚µ‚Ü‚·B
+        /// äºŒã¤ã®è§’åº¦é–“ã®æœ€å°å·®ã‚’è¨ˆç®—ã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="angleA">Å‰‚ÌŠp“xB</param>
-        /// <param name="angleB">“ñ”Ô–Ú‚ÌŠp“xB</param>
-        /// <returns>angleA‚©‚çangleB‚Ö‚Ì‰~ã‚Ì•ûŒü‚ğl—¶‚µ‚½Šp“x‚Ì·B</returns>
+        /// <param name="angleA">æœ€åˆã®è§’åº¦ã€‚</param>
+        /// <param name="angleB">äºŒç•ªç›®ã®è§’åº¦ã€‚</param>
+        /// <returns>angleAã‹ã‚‰angleBã¸ã®å††ä¸Šã®æ–¹å‘ã‚’è€ƒæ…®ã—ãŸè§’åº¦ã®å·®ã€‚</returns>
         public static float AngleDifference(float angleA, float angleB)
         {
-            return NormalizeAngle(angleB - angleA);
+            return NormalizeAngle180(angleB - angleA);
         }
 
         /// <summary>
-        /// Šp“x‚ğw’è‚³‚ê‚½”ÍˆÍ“à‚É§ŒÀ‚µ‚Ü‚·B
+        /// è§’åº¦ã‚’æŒ‡å®šã•ã‚ŒãŸç¯„å›²å†…ã«åˆ¶é™ã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="angle">§ŒÀ‚·‚éŠp“xB</param>
-        /// <param name="minAngle">”ÍˆÍ‚ÌÅ¬Šp“xB</param>
-        /// <param name="maxAngle">”ÍˆÍ‚ÌÅ‘åŠp“xB</param>
-        /// <returns>§ŒÀ‚³‚ê‚½Šp“xB</returns>
+        /// <param name="angle">åˆ¶é™ã™ã‚‹è§’åº¦ã€‚</param>
+        /// <param name="minAngle">ç¯„å›²ã®æœ€å°è§’åº¦ã€‚</param>
+        /// <param name="maxAngle">ç¯„å›²ã®æœ€å¤§è§’åº¦ã€‚</param>
+        /// <returns>åˆ¶é™ã•ã‚ŒãŸè§’åº¦ã€‚</returns>
+
         public static float ClampAngle(float angle, float minAngle, float maxAngle)
         {
-            float normalizedAngle = NormalizeAngle(angle);
-            return Mathf.Clamp(normalizedAngle, minAngle, maxAngle);
+            float distanceToMin = AngleDifference(angle, minAngle);
+            float distanceToMax = AngleDifference(angle, maxAngle);
+
+            if (distanceToMin <= 0 && distanceToMax >= 0)
+            {
+                return angle;
+            }
+
+            return Mathf.Abs(distanceToMin) < Mathf.Abs(distanceToMax) ? minAngle : maxAngle;
         }
 
-        
 
         /// <summary>
-        /// ˆê‚Â‚ÌŠp“x‚©‚ç•Ê‚ÌŠp“x‚Ü‚Å‚ÌŒv‰ñ‚è‚Ì‹——£‚ğŒvZ‚µ‚Ü‚·B
+        /// ä¸€ã¤ã®è§’åº¦ã‹ã‚‰åˆ¥ã®è§’åº¦ã¾ã§ã®æ™‚è¨ˆå›ã‚Šã®è·é›¢ã‚’è¨ˆç®—ã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="fromAngle">ŠJnŠp“xB</param>
-        /// <param name="toAngle">I—¹Šp“xB</param>
-        /// <returns>Šp“xŠÔ‚ÌŒv‰ñ‚è‚Ì‹——£B</returns>
-        public static float ClockwiseDistance(float fromAngle, float toAngle)
+        /// <returns>è§’åº¦é–“ã®æ™‚è¨ˆå›ã‚Šã®è·é›¢ã€‚</returns>
+        public static float ClockwiseAngleDistance(float angleA, float angleB)
         {
-            float normalizedFrom = NormalizeAngle(fromAngle);
-            float normalizedTo = NormalizeAngle(toAngle);
-            if (normalizedTo >= normalizedFrom)
-                return normalizedTo - normalizedFrom;
-            return 360 + normalizedTo - normalizedFrom;
+            return 360f - NormalizeAngle(angleB - angleA);
         }
 
         /// <summary>
-        /// ˆê‚Â‚ÌŠp“x‚©‚ç•Ê‚ÌŠp“x‚Ü‚Å‚Ì”½Œv‰ñ‚è‚Ì‹——£‚ğŒvZ‚µ‚Ü‚·B
+        /// ä¸€ã¤ã®è§’åº¦ã‹ã‚‰åˆ¥ã®è§’åº¦ã¾ã§ã®åæ™‚è¨ˆå›ã‚Šã®è·é›¢ã‚’è¨ˆç®—ã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="fromAngle">ŠJnŠp“xB</param>
-        /// <param name="toAngle">I—¹Šp“xB</param>
-        /// <returns>Šp“xŠÔ‚Ì”½Œv‰ñ‚è‚Ì‹——£B</returns>
-        public static float CounterClockwiseDistance(float fromAngle, float toAngle)
+        /// <returns>è§’åº¦é–“ã®åæ™‚è¨ˆå›ã‚Šã®è·é›¢ã€‚</returns>
+        public static float CounterClockwiseAngleDistance(float angleA, float angleB)
         {
-            return 360 - ClockwiseDistance(fromAngle, toAngle);
+            return 360f - NormalizeAngle(angleA - angleB);
         }
 
+
         /// <summary>
-        /// “ñ‚Â‚ÌŠp“x‚ÌŠÔ‚ÅüŒ`•âŠÔ‚ğs‚¢‚Ü‚·B
+        /// è§’åº¦ã‚’æœ€ã‚‚è¿‘ã„90åº¦ã®å€æ•°ã«å››æ¨äº”å…¥ã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="angle1">Å‰‚ÌŠp“xB</param>
-        /// <param name="angle2">“ñ”Ô–Ú‚ÌŠp“xB</param>
-        /// <param name="t">•âŠÔ‚Ì”ä—¦B</param>
-        /// <returns>•âŠÔ‚³‚ê‚½Šp“xB</returns>
-        public static float LerpAngle(float angle1, float angle2, float t)
+        /// <param name="angle">å››æ¨äº”å…¥ã™ã‚‹è§’åº¦ã€‚</param>
+        /// <returns>å››æ¨äº”å…¥ã•ã‚ŒãŸè§’åº¦ã€‚</returns>
+        public static float RoundToNearestRightAngle(float angle)
         {
-            float diff = NormalizeAngle(angle2 - angle1);
-            if (diff > 180) diff -= 360;
-            return angle1 + diff * t;
+            float a = Mathf.Round(NormalizeAngle(angle) / 90f) * 90f;
+            return (a == 360) ? 0 : a;
         }
 
         /// <summary>
-        /// ˆê‚Â‚ÌŠp“x‚©‚ç•Ê‚ÌŠp“x‚Ö‚ÌÅ’Z‚Ì‰ñ“]•ûŒü‚ğŒvZ‚µ‚Ü‚·B
+        /// è¤‡æ•°ã®è§’åº¦ã®å¹³å‡ã‚’è¨ˆç®—ã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="fromAngle">ŠJnŠp“xB</param>
-        /// <param name="toAngle">I—¹Šp“xB</param>
-        /// <returns>Œv‰ñ‚è‚Ìê‡‚Í1A”½Œv‰ñ‚è‚Ìê‡‚Í-1B</returns>
-        public static int ShortestRotationDirection(float fromAngle, float toAngle)
-        {
-            return (NormalizeAngle(fromAngle - toAngle) > 0) ? 1 : -1;
-        }
-
-        /// <summary>
-        /// •¡”‚ÌŠp“x‚Ì•½‹Ï‚ğŒvZ‚µ‚Ü‚·B
-        /// </summary>
-        /// <param name="angles">Šp“x‚Ì”z—ñB</param>
-        /// <returns>•½‹ÏŠp“xB</returns>
+        /// <param name="angles">è§’åº¦ã®é…åˆ—ã€‚</param>
+        /// <returns>å¹³å‡è§’åº¦ã€‚</returns>
         public static float AverageAngle(params float[] angles)
         {
             float sinSum = 0;
@@ -128,17 +113,5 @@ namespace Nulock.Math
 
             return Mathf.Atan2(sinSum, cosSum) * Mathf.Rad2Deg;
         }
-
-        /// <summary>
-        /// Šp“x‚ğÅ‚à‹ß‚¢90“x‚Ì”{”‚ÉlÌŒÜ“ü‚µ‚Ü‚·B
-        /// </summary>
-        /// <param name="angle">lÌŒÜ“ü‚·‚éŠp“xB</param>
-        /// <returns>lÌŒÜ“ü‚³‚ê‚½Šp“xB</returns>
-        public static float RoundToNearestRightAngle(float angle)
-        {
-            return Mathf.Round(angle / 90f) * 90f;
-        }
-
-        
     }
 }
